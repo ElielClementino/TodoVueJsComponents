@@ -27,7 +27,7 @@
       </div>
     </div>
   </div>
-  <AddTask :title="newTask.title" :project="newTask.project" :dueTo="newTask.dueTo" v-show="showAdd"  @newTask="addNewTask" />
+  <AddTask  v-show="showAdd"  @newTaskPush="addNewTask" />
   <EditTask v-show='showEdit' @editingTask="editTask(tarefa)"/>
   </div>
 </template>
@@ -44,11 +44,6 @@ export default {
       tasks:[],
       showAdd:false,
       showEdit:false,
-      newTask:{
-        title : '',
-        project : '',
-        dueTo : '',
-      }
     }
   },
   components: {
@@ -60,14 +55,14 @@ export default {
       api_methods.getData((data)=> this.tasks = data)
       },
     deleteTask(task){
-      api_methods.removeData(task.id)
+      api_methods.removeData(task.id, this.renderTasks())
     },
     addNewTask(task){
       this.showAdd = !this.showAdd
-      api_methods.addData(task)
+      api_methods.addData(task, this.renderTasks())
     },
     editTask(task){
-      api_methods.editData(task.id)
+      api_methods.editData(task.id, this.renderTasks())
     },
     renderFormAdd(){
       this.showAdd=!this.showAdd
@@ -78,9 +73,6 @@ export default {
   },
   created(){
     this.renderTasks()
-  },
-  updated(){
-    this.renderTasks()
-  },
+  }
 }
 </script>
