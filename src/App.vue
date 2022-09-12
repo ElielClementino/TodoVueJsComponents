@@ -64,7 +64,7 @@ export default {
     },
     addNewTask(task){
       this.showAdd = !this.showAdd
-      this.tasks = api_methods.addData(task)
+      api_methods.addData(task)
     },
     editTask(task){
       api_methods.editData(task.id)
